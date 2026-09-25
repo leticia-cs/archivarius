@@ -1,5 +1,5 @@
-function goTo(url) {
-    window.location.href = url;
+function goTo(path) {
+    {{ url_for(path) }}
 }
 
 // CRUD facil

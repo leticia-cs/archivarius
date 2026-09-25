@@ -1,11 +1,15 @@
 # entry point da aplicação
 import sqlite3
 from flask import Flask, jsonify, render_template, request
-from db import get_db, init_db
+from db import init_db, get_db, close_db
 
 app = Flask(__name__)
-#iniciar banco
-# init_db()
+app.teardown_appcontext(close_db)
+
+# NAVEGACAO BSICA
+@app.route('/acervo')
+def acervo():
+    return render_template('acervo.html')
 
 # API - CRUD
 # TODO: Revisar
@@ -43,4 +47,5 @@ def home():
     return render_template('home.html')
 
 if __name__ == '__main__':
+    init_db()
     app.run(debug=True)
