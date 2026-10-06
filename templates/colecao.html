@@ -52,11 +52,28 @@
     </div>
     <!--     LISTAGEM -->
     <div>
+      {% if itens %}
+      {% for item in itens %}
+        <div>
+          <img/>
+          <div>
+            <p>{{ item['item_nome'] }}</p>
+            <p>{{ item['item_autoria'] }}; {{ item['item_ano'] }}</p>
+          </div>
+          <button>. . .</button>
+        </div>
+        {% endfor %}
+      {% else %}
+        <div>
+        <p>Nenhum item cadastrado!</p>
+      </div>
+      {% endif %}
+<!--      EXEMPLO
       <div>
         <img />
         <div>
           <p>Nome item</p>
-          <p>Autor; Edicao; Ano</p>
+          <p>Autoria; Ano</p>
         </div>
         <div>
           <p>Ultimo acesso: 01/01/2001</p>
@@ -64,6 +81,7 @@
         </div>
         <button>. . .</button>
       </div>
+      -->
     </div>
   </main>
 

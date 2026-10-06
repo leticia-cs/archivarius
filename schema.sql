@@ -12,12 +12,15 @@ CREATE TABLE IF NOT EXISTS itens (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     item_nome TEXT NOT NULL,
     item_autoria TEXT NOT NULL,
-    item_tipo TEXT NOT NULL -- e.g., 'LIVRO', 'QUADRO'
+    item_ano TEXT NOT NULL--,
+    --item_tipo TEXT NOT NULL -- e.g., 'LIVRO', 'QUADRO'
 );
 
-CREATE TABLE IF NOT EXISTS itens_livro (
-    id INTEGER PRIMARY KEY,
-    author TEXT NOT NULL,
-    page_count INTEGER,
-    FOREIGN KEY (id) REFERENCES itens(id) ON DELETE CASCADE
-);
+-- === F U T U R O ===
+
+--CREATE TABLE IF NOT EXISTS itens_livro (
+--    id INTEGER PRIMARY KEY,
+--    author TEXT NOT NULL,
+--    page_count INTEGER,
+--    FOREIGN KEY (id) REFERENCES itens(id) ON DELETE CASCADE
+--);
