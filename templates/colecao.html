@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+  <script src="../static/index.js"></script>
 </head>
 <body>
 
@@ -48,7 +49,7 @@
     </form>
     <!--     OPCOES -->
     <div>
-      <button>ADD colecao</button>
+      <button onclick="toggleModal('modalAdc')">ADD colecao</button>
     </div>
     <!--     LISTAGEM -->
     <div>
@@ -123,6 +124,6 @@
     <button>SALVAR</button>
   </div>
 </div>
-
+<script src="{{ url_for('static', filename='index.js') }}"></script>
 </body>
 </html>
