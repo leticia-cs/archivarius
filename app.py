@@ -6,44 +6,19 @@ from db import init_db, get_db, close_db
 app = Flask(__name__)
 app.teardown_appcontext(close_db)
 
-# NAVEGACAO BSICA
-@app.route('/acervo')
-def acervo():
-    return render_template('acervo.html')
+init_db()
 
 @app.route('/colecao')
-def colecao():
-    return render_template('colecao.html')
-
-# API - CRUD
-# TODO: Revisar
-
-# Ler tudo
-@app.route("/api/items", methods=["GET"])
-def get_items():
-    pass
-    # db = get_db()
-    # items = db.execute("SELECT * FROM items").fetchall()
-    # return jsonify([dict(item) for item in items])
-
-
-# CREATE: Add a new item
-@app.route("/api/items", methods=["POST"])
-def add_item():
-    pass
-
-# DELETE: Remove an item
-@app.route("/api/items/<int:item_id>", methods=["DELETE"])
-def delete_item(item_id):
-    pass
-
-@app.route('/register')
-def register():
-    return render_template('register.html')
-
-@app.route('/login')
-def login():
-    return render_template('login.html')
+def pagina_colecao():
+    termo = request.args.get("q", "")
+    db = get_db()
+    if termo:
+        itens = db.execute(
+            "SELECT * FROM itens WHERE item_nome LIKE ?", (f"%{termo}%",)
+        ).fetchall()
+    else:
+        itens = db.execute("SELECT * FROM itens").fetchall()
+    return render_template("colecao.html", itens=itens, termo=termo)
 
 @app.route('/')
 def home():
@@ -51,5 +26,4 @@ def home():
     return render_template('home.html')
 
 if __name__ == '__main__':
-    init_db()
     app.run(debug=True)

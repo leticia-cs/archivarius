@@ -42,13 +42,13 @@
   </div>
   <main>
     <h1>COLECAO</h1>
-    <div>
-      <input type="text" placeholder="buscar item..." />
-      <button>BUSCAR</button>
-    </div>
+    <form method="get" action="/colecao">
+      <input type="text" name="q" value="{{ termo }}">
+      <button type="submit">BUSCAR</button>
+    </form>
     <!--     OPCOES -->
     <div>
-      <button>Editar colecao</button>
+      <button>ADD colecao</button>
     </div>
     <!--     LISTAGEM -->
     <div>
