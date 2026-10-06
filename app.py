@@ -11,6 +11,10 @@ app.teardown_appcontext(close_db)
 def acervo():
     return render_template('acervo.html')
 
+@app.route('/colecao')
+def colecao():
+    return render_template('colecao.html')
+
 # API - CRUD
 # TODO: Revisar
 
