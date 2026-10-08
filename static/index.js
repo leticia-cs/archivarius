@@ -1,3 +1,5 @@
+import crud from "./crud" ;
+
 function goTo(path) {
     {{ url_for(path) }}
 }
