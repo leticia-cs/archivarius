@@ -2,30 +2,52 @@ function goTo(path) {
     {{ url_for(path) }}
 }
 
-function toggleModal(modal_Id){
-  // div modal
-  let modalParent = document.createElement('div');
-  modalParent.className = "modal-parent"
+function toggleModal(modal_id) {
+  // If the modal already exists, remove it (close)
+  const existing = document.getElementById(modal_id);
+  if (existing) {
+    existing.remove();
+    return;
+  }
+
+  const modalParent = document.createElement('div');
+  modalParent.className = "modal-parent";
   modalParent.id = modal_id;
 
-  let modalContent = create_modal('addItem');
+  const modalClose = document.createElement('button');
+  modalClose.addEventListener('click', () => toggleModal(modal_id));
+  modalClose.textContent = "X";
 
+  const modalContent = create_modal('addItem', modal_id);
   modalParent.appendChild(modalContent);
-
+  modalParent.appendChild(modalClose);
+  document.body.appendChild(modalParent);
 }
 
-function create_modal(type) {
-    if (type == 'addItem') {
+function create_modal(variant, modal_id) {
+    if (variant === 'addItem') {
         let contentParent = document.createElement('div');
-        contentParent.className = 'modal-content'; // repare: className, não classname
+        contentParent.className = 'modal-content';
 
         contentParent.append(
-            create_fielditem('create_titulo', 'Titulo:', 'iTitulo', 'titulo obra'),
-            create_fielditem('create_autoria', 'Autoria:', 'iAutoria', 'autoria obra'),
-            create_fielditem('create_editora', 'Editora:', 'iEditora', 'editora obra'),
-            create_fielditem('create_generoLiterario', 'Genero Literario:', 'igenero', 'genero literario obra'),
-            create_fielditem('create_isbn', 'ISBN:', 'iIsbn', 'isbn obra')
+            create_fielditem('iTitulo', 'Titulo:', 'iTitulo', 'titulo obra'),
+            create_fielditem('iAutoria', 'Autoria:', 'iAutoria', 'autoria obra'),
+            create_fielditem('iEditora', 'Editora:', 'iEditora', 'editora obra'),
+            create_fielditem('iGenero', 'Genero Literario:', 'iGenero', 'genero literario obra'),
+            create_fielditem('iIsbn', 'ISBN:', 'iIsbn', 'isbn obra')
         );
+        // BOTOES MODAL
+        const contentButtons = document.createElement('div');
+        const modalCancel = document.createElement('button');
+        modalCancel.addEventListener('click', () => toggleModal(modal_id));
+        modalCancel.textContent = "cancelar";
+        const modalSubmit = document.createElement('button');
+        //modalSubmit.onclick =
+        modalSubmit.textContent = "enviar";
+
+        contentButtons.appendChild(modalCancel);
+        contentButtons.appendChild(modalSubmit);
+        contentParent.appendChild(contentButtons);
 
         return contentParent;
     }
@@ -38,7 +60,7 @@ function create_fielditem(field_id, label_title, input_name, input_placeholder =
 
     let label = document.createElement('label');
     label.textContent = label_title;
-    label.htmlFor = input_name; // atenção: é "htmlFor", não "for"
+    label.htmlFor = input_name;
 
     let input = document.createElement('input');
     input.type = input_type;
