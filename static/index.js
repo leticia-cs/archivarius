@@ -42,7 +42,8 @@ function create_modal(variant, modal_id) {
         modalCancel.addEventListener('click', () => toggleModal(modal_id));
         modalCancel.textContent = "cancelar";
         const modalSubmit = document.createElement('button');
-        //modalSubmit.onclick =
+        // TODO: CREATE
+        modalSubmit.addEventListener('click', () => alert('debug: CRIADO!'));
         modalSubmit.textContent = "enviar";
 
         contentButtons.appendChild(modalCancel);
