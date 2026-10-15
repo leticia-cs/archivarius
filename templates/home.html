@@ -1,32 +1,131 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <title>home page</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tela Inicial</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<!--  <link rel="stylesheet" href="{{ url_for('static', filename='inicio.css') }}">-->
 </head>
 <body>
-<header>
-    <h1>Home</h1>
-</header>
-<section id="home_functionalities">
-    <h2>Functionalities</h2>
-    <a href="{{ url_for('acervo') }}">Acervo</a>
-<!--    <button class="functionality-container">-->
-<!--        <p>Sistema de empréstimo</p>-->
-<!--    </button>-->
-<!--    <button class="functionality-container">-->
-<!--        <p>Estatísticas</p>-->
-<!--    </button>-->
-<!--    <button class="functionality-container">-->
-<!--        <p>Log da sessão</p>-->
-<!--    </button>-->
-<!--    <button class="functionality-container">-->
-<!--        <p>Gerenciar usuários</p>-->
-<!--    </button>-->
-<!--    <button class="functionality-container">-->
-<!--        <p>Sair da conta</p>-->
-<!--    </button>-->
-</section>
-<script src="{{ url_for('static', filename='index.js') }}"></script>
+
+  <div class="app">
+
+    <!-- MENU LATERAL (igual ao da Coleção; só muda o aria-current) -->
+    <aside class="menu">
+      <div>
+        <!-- CLIENTE -->
+        <div class="menu__cliente">
+          <p class="menu__rotulo">CLIENTE</p>
+          <div class="marca">
+            <img class="avatar" alt="">
+            <p class="marca__nome">Museu João</p>
+          </div>
+        </div>
+
+        <!-- MÓDULOS -->
+        <nav aria-label="Módulos">
+          <p class="menu__rotulo">MÓDULOS</p>
+          <ul class="menu__lista">
+            <li><a class="menu__link" href="#" aria-current="page">Tela Inicial</a></li>
+            <li><a class="menu__link" href="#">Coleção</a></li>
+            <li><a class="menu__link" href="#">Estatísticas</a></li>
+            <li><a class="menu__link" href="#">Empréstimo</a></li>
+            <li><a class="menu__link" href="#">Usuários</a></li>
+            <li><a class="menu__link" href="#">Acessos</a></li>
+            <li><a class="menu__link" href="#">Configurações</a></li>
+          </ul>
+        </nav>
+      </div>
+
+      <!-- USUÁRIO -->
+      <div class="usuario">
+        <img class="avatar" alt="">
+        <div>
+          <p class="usuario__nome">Alice S. T.</p>
+          <p class="usuario__cargo">ADMINISTRADOR</p>
+        </div>
+      </div>
+    </aside>
+
+    <!-- CONTEÚDO -->
+    <main class="principal">
+
+      <header class="cabecalho">
+        <h1 class="cabecalho__titulo">TELA INICIAL</h1>
+        <p class="cabecalho__subtitulo">Visão geral</p>
+      </header>
+
+      <div class="conteudo">
+        <p class="saudacao">Olá, Alice!</p>
+
+        <!-- MAIS VISITADOS -->
+        <section class="secao" aria-labelledby="tituloVisitados">
+          <h2 class="secao__titulo" id="tituloVisitados">Mais visitados</h2>
+          <ul class="cards">
+            <li>
+              <a class="card" href="#">
+                <p class="card__titulo">Coleção</p>
+                <p class="card__texto">itens catalogados</p>
+              </a>
+            </li>
+            <li>
+              <a class="card" href="#">
+                <p class="card__titulo">Empréstimo</p>
+                <p class="card__texto">Emprestar item</p>
+              </a>
+            </li>
+            <li>
+              <a class="card" href="#">
+                <p class="card__titulo">Coleção</p>
+                <p class="card__texto">Cadastrar item</p>
+              </a>
+            </li>
+            <li>
+              <a class="card" href="#">
+                <p class="card__titulo">Empréstimo</p>
+                <p class="card__texto">Devolver item</p>
+              </a>
+            </li>
+          </ul>
+        </section>
+
+        <!-- USUÁRIOS CADASTRADOS -->
+        <section class="secao" aria-labelledby="tituloUsuarios">
+          <h2 class="secao__titulo" id="tituloUsuarios">Usuários cadastrados</h2>
+          <ul class="cards">
+            <li>
+              <article class="card">
+                <p class="card__titulo">Alice S. T.</p>
+                <p class="card__texto">Administrador</p>
+              </article>
+            </li>
+            <li>
+              <article class="card">
+                <p class="card__titulo">Joana P.</p>
+                <p class="card__texto">Administrador</p>
+              </article>
+            </li>
+            <li>
+              <article class="card">
+                <p class="card__titulo">Ciro J.</p>
+                <p class="card__texto">Emprestando</p>
+              </article>
+            </li>
+            <li>
+              <article class="card">
+                <p class="card__titulo">Lívia F.</p>
+                <p class="card__texto">Emprestando</p>
+              </article>
+            </li>
+          </ul>
+        </section>
+      </div>
+
+    </main>
+
+  </div>
+
+  <script type="module" src="{{ url_for('static', filename='index.js') }}"></script>
 </body>
 </html>

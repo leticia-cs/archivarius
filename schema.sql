@@ -8,11 +8,20 @@ CREATE TABLE IF NOT EXISTS users (
     user_modulos TEXT NOT NULL -- armazena array JSON, e.g. ['colecao','perfil']
 );
 
+--CREATE TABLE IF NOT EXISTS itens (
+--    id INTEGER PRIMARY KEY AUTOINCREMENT,
+--    item_nome TEXT NOT NULL,
+--    item_autoria TEXT NOT NULL,
+--    item_ano TEXT NOT NULL--,
+--);
+
 CREATE TABLE IF NOT EXISTS itens (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     item_nome TEXT NOT NULL,
     item_autoria TEXT NOT NULL,
-    item_ano TEXT NOT NULL--,
+    item_editora TEXT,
+    item_genero TEXT,
+    item_isbn TEXT
     --item_tipo TEXT NOT NULL -- e.g., 'LIVRO', 'QUADRO'
 );
 

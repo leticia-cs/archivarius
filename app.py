@@ -1,6 +1,6 @@
 # entry point da aplicação
 import sqlite3
-from flask import Flask, jsonify, render_template, request
+from flask import Flask, jsonify, render_template, request, redirect, url_for
 from db import init_db, get_db, close_db
 import crud
 
@@ -20,20 +20,24 @@ def pagina_colecao():
     else:
         itens = db.execute("SELECT * FROM itens").fetchall()
     return render_template("colecao2.html", itens=itens, termo=termo)
-
 @app.route('/')
+def
+
+@app.route('/home')
 def home():
     #return jsonify({"message": "API is running!"})
-    return render_template('home.html')
+    return render_template("home.html")
 
 # === ROTAS API ===========
 
 # CRUD - create
 @app.route('/api/itens', methods=['POST'])
 def criar():
-    d = request.get_json()
-    novo_id = crud.criar(d["titulo"], d["autoria"], d["editora"], d["genero"], d["isbn"])
-    return jsonify({"id": novo_id}), 201
+    dados = {c: request.form.get(c, "").strip() for c in crud.CAMPOS}
+    if not dados["item_nome"] or not dados["item_autoria"]:
+        return jsonify({"erro": "Nome e autoria são obrigatórios."}), 400
+    crud.criar(dados)
+    return redirect(url_for('pagina_colecao'))
 
 # CRUD - read
 @app.route('/api/itens', methods=['GET'])

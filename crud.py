@@ -1,44 +1,22 @@
-from db import *
+from db import get_db
 
-def criar(titulo, autoria, editora, genero, isbn):
+CAMPOS = ["item_nome", "item_autoria", "item_editora", "item_genero", "item_isbn"]
+
+def criar(dados):
     db = get_db()
     cursor = db.execute(
-        "INSERT INTO itens (item_nome, item_autoria, item_editora, item_genero, item_isbn) "
-        "VALUES (?, ?, ?, ?, ?)",
-        (titulo, autoria, editora, genero, isbn)
+        f"INSERT INTO itens ({', '.join(CAMPOS)}) "
+        f"VALUES ({', '.join('?' for _ in CAMPOS)})",
+        [dados.get(c, "") for c in CAMPOS]
     )
     db.commit()
-    return cursor.lastrowid  # id do item criado; gerado pelo AUTOINCREMENT
+    return cursor.lastrowid
 
-def listar_tudo():
+def atualizar(item_id, dados):
     db = get_db()
-    itens = db.execute("SELECT * FROM itens").fetchall()
-    return itens  # lista de sqlite3.Row; como se fosse key do localStorage
-
-def buscar(item_id):
-    db = get_db()
-    item = db.execute(
-        "SELECT * FROM itens WHERE id = ?", (item_id,)
-    ).fetchone()
-    return item  # sqlite3.Row ou None se não existir
-
-# SE QUISER RETORNAR JSON
-#item_dict = dict(item)  # funciona graças ao row_factory = sqlite3.Row
-
-def atualizar(item_id, nome, autoria, tipo):
-    db = get_db()
+    sets = ", ".join(f"{c} = ?" for c in CAMPOS)
     db.execute(
-        "UPDATE itens SET item_nome = ?, item_autoria = ?, item_tipo = ? WHERE id = ?",
-        (nome, autoria, tipo, item_id)
+        f"UPDATE itens SET {sets} WHERE id = ?",
+        [dados.get(c, "") for c in CAMPOS] + [item_id]
     )
-    db.commit()
-
-def deletar_item(item_id):
-    db = get_db()
-    db.execute("DELETE FROM itens WHERE id = ?", (item_id,))
-    db.commit()
-
-def deletar_tudo():
-    db = get_db()
-    db.execute("DROP TABLE itens")
     db.commit()

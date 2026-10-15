@@ -22,22 +22,22 @@
           </div>
         </div>
 
-        <!-- MÓDULOS -->
+        <!-- MODULOS -->
         <nav aria-label="Módulos">
           <p class="menu__rotulo">MÓDULOS</p>
           <ul class="menu__lista">
             <li><a class="menu__link" href="./home.html">Tela Inicial</a></li>
             <li><a class="menu__link" href="#" aria-current="page">Coleção</a></li>
-            <li><a style="background-color:var(--fundo-externo)" class="menu__link" href="#">Estatísticas</a></li>
-            <li><a style="background-color:var(--fundo-externo)" class="menu__link" href="#">Empréstimo</a></li>
-            <li><a style="background-color:var(--fundo-externo)" class="menu__link" href="#">Usuários</a></li>
-            <li><a style="background-color:var(--fundo-externo)" class="menu__link" href="#">Acessos</a></li>
-            <li><a style="background-color:var(--fundo-externo)" class="menu__link" href="#">Configurações</a></li>
+            <li><a class="menu__link menu__desativado" href="#">Estatísticas</a></li>
+            <li><a class="menu__link menu__desativado" href="#">Empréstimo</a></li>
+            <li><a class="menu__link menu__desativado" href="#">Usuários</a></li>
+            <li><a class="menu__link menu__desativado" href="#">Acessos</a></li>
+            <li><a class="menu__link menu__desativado" href="#">Configurações</a></li>
           </ul>
         </nav>
       </div>
 
-      <!-- USUÁRIO -->
+      <!-- USUARIO -->
       <div class="usuario">
         <img class="avatar" alt="">
         <div>
@@ -47,16 +47,16 @@
       </div>
     </aside>
 
-    <!-- CONTEÚDO -->
+    <!-- CONTEUDO -->
     <main class="principal">
       <h1 class="principal__titulo">COLEÇÃO</h1>
 
-      <form class="busca" method="get" action="/colecao" role="search">
+      <form class="busca" method="get" action="/api/itens" role="search">
         <input class="busca__campo" type="text" name="q" value="{{ termo }}" aria-label="Buscar na coleção">
         <button class="busca__botao" type="submit">BUSCAR</button>
       </form>
 
-      <!-- OPÇÕES -->
+      <!-- OPCOES -->
       <div class="opcoes">
         <nav class="filtros" aria-label="Filtros">
           <span class="filtros__titulo">Filtros</span>
@@ -69,15 +69,15 @@
           <button class="opcoes__botao" type="button"
                   data-abrir-modal="modalAdc"
                   data-modal-titulo="Adicionar item"
-                  data-modal-action="/colecao/adicionar">Adicionar item</button>
+                  data-modal-action="/api/itens">Adicionar item</button>
           <button class="opcoes__botao" type="button"
                   data-abrir-modal="modalAdc"
                   data-modal-titulo="Editar coleção"
-                  data-modal-action="/colecao/atualizar">Editar coleção</button>
+                  data-modal-action="/api/itens">Editar coleção</button>
         </div>
       </div>
 
-      <!-- LISTAGEM -->
+      <!-- LISTAR -->
       <div class="lista">
         {% if itens %}
           {% for item in itens %}
@@ -128,9 +128,9 @@
 
   </div>
 
-  <!-- MODAL: EDITAR COLEÇÃO -->
+  <!-- MODAL: EDITAR COLECAO -->
   <dialog class="modal" id="modalAdc" aria-labelledby="modalAdcTitulo">
-    <form class="modal__corpo" method="post" action="/colecao/atualizar" enctype="multipart/form-data">
+    <form class="modal__corpo" method="post" action="/api/itens" enctype="multipart/form-data">
       <h2 class="modal__titulo" id="modalAdcTitulo">Editar coleção</h2>
 
       <img class="modal__imagem" alt="">
@@ -139,23 +139,23 @@
         <!-- FIELDITEM -->
         <div class="campo">
           <label for="campoTitulo">Título:</label>
-          <input id="campoTitulo" name="titulo" type="text" placeholder="título da obra">
+          <input id="campoTitulo" name="item_nome" type="text" placeholder="título da obra">
         </div>
         <div class="campo">
           <label for="campoAutor">Autor(a):</label>
-          <input id="campoAutor" name="autor" type="text" placeholder="autor(a) da obra">
+          <input id="campoAutor" name="item_autoria" type="text" placeholder="autor(a) da obra">
         </div>
         <div class="campo">
           <label for="campoEditora">Editora:</label>
-          <input id="campoEditora" name="editora" type="text" placeholder="editora da obra">
+          <input id="campoEditora" name="item_editora" type="text" placeholder="editora da obra">
         </div>
         <div class="campo">
           <label for="campoGenero">Gênero Literário:</label>
-          <input id="campoGenero" name="genero" type="text" placeholder="gênero literário da obra">
+          <input id="campoGenero" name="item_genero" type="text" placeholder="gênero literário da obra">
         </div>
         <div class="campo">
           <label for="campoIsbn">ISBN:</label>
-          <input id="campoIsbn" name="isbn" type="number" placeholder="código ISBN da obra">
+          <input id="campoIsbn" name="item_isbn" type="number" placeholder="código ISBN da obra">
         </div>
         <div class="campo">
           <label for="campoImagem">Imagem:</label>
