@@ -1,11 +1,11 @@
-import crud from "./crud" ;
+import * as CRUD from 'crud.py'
 
 function goTo(path) {
     {{ url_for(path) }}
 }
 
 function toggleModal(modal_id) {
-  // If the modal already exists, remove it (close)
+  // se modal existe, remove
   const existing = document.getElementById(modal_id);
   if (existing) {
     existing.remove();
@@ -45,7 +45,8 @@ function create_modal(variant, modal_id) {
         modalCancel.textContent = "cancelar";
         const modalSubmit = document.createElement('button');
         // TODO: CREATE
-        modalSubmit.addEventListener('click', () => alert('debug: CRIADO!'));
+        //modalSubmit.addEventListener('click', () => alert('debug: CRIADO!'));
+        modalSubmit.addEventListener('click', () => CRUD.criar);
         modalSubmit.textContent = "enviar";
 
         contentButtons.appendChild(modalCancel);
