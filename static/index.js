@@ -1,5 +1,7 @@
 import {CRUD} from './crud.js';
 
+function goTo(path) { window.location.href = path; }
+
 function toggleModal(modal_id) {
   // se modal existe, remove
   const existing = document.getElementById(modal_id);
@@ -93,6 +95,9 @@ function create_fielditem(field_id, label_title, input_name, input_placeholder =
 
     return field;
 }
+
+window.toggleModal = toggleModal;
+window.goTo = goTo;
 
 // -------------------------
 

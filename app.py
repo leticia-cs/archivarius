@@ -19,7 +19,7 @@ def pagina_colecao():
         ).fetchall()
     else:
         itens = db.execute("SELECT * FROM itens").fetchall()
-    return render_template("colecao.html", itens=itens, termo=termo)
+    return render_template("colecao2.html", itens=itens, termo=termo)
 
 @app.route('/')
 def home():

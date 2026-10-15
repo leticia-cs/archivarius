@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Coleção</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+</head>
+<body>
+
+  <div class="app">
+
+    <!-- MENU LATERAL -->
+    <aside class="menu">
+      <div>
+        <!-- CLIENTE -->
+        <div class="menu__cliente">
+          <p class="menu__rotulo">CLIENTE</p>
+          <div class="marca">
+            <img class="avatar" alt="">
+            <p class="marca__nome">Museu João</p>
+          </div>
+        </div>
+
+        <!-- MÓDULOS -->
+        <nav aria-label="Módulos">
+          <p class="menu__rotulo">MÓDULOS</p>
+          <ul class="menu__lista">
+            <li><a class="menu__link" href="./home.html">Tela Inicial</a></li>
+            <li><a class="menu__link" href="#" aria-current="page">Coleção</a></li>
+            <li><a style="background-color:var(--fundo-externo)" class="menu__link" href="#">Estatísticas</a></li>
+            <li><a style="background-color:var(--fundo-externo)" class="menu__link" href="#">Empréstimo</a></li>
+            <li><a style="background-color:var(--fundo-externo)" class="menu__link" href="#">Usuários</a></li>
+            <li><a style="background-color:var(--fundo-externo)" class="menu__link" href="#">Acessos</a></li>
+            <li><a style="background-color:var(--fundo-externo)" class="menu__link" href="#">Configurações</a></li>
+          </ul>
+        </nav>
+      </div>
+
+      <!-- USUÁRIO -->
+      <div class="usuario">
+        <img class="avatar" alt="">
+        <div>
+          <p class="usuario__nome">Alice S. T.</p>
+          <p class="usuario__cargo">ADMINISTRADOR</p>
+        </div>
+      </div>
+    </aside>
+
+    <!-- CONTEÚDO -->
+    <main class="principal">
+      <h1 class="principal__titulo">COLEÇÃO</h1>
+
+      <form class="busca" method="get" action="/colecao" role="search">
+        <input class="busca__campo" type="text" name="q" value="{{ termo }}" aria-label="Buscar na coleção">
+        <button class="busca__botao" type="submit">BUSCAR</button>
+      </form>
+
+      <!-- OPÇÕES -->
+      <div class="opcoes">
+        <nav class="filtros" aria-label="Filtros">
+          <span class="filtros__titulo">Filtros</span>
+          <a href="/colecao?q={{ termo|urlencode }}&ordem=alfabetica">Ordem alfabética</a>
+          <a href="/colecao?q={{ termo|urlencode }}&ordem=acessados">Mais acessados</a>
+          <a href="/colecao?q={{ termo|urlencode }}&ordem=novos">Mais novos</a>
+          <a href="/colecao?q={{ termo|urlencode }}&ordem=local">Por local</a>
+        </nav>
+        <div class="opcoes__botoes">
+          <button class="opcoes__botao" type="button"
+                  data-abrir-modal="modalAdc"
+                  data-modal-titulo="Adicionar item"
+                  data-modal-action="/colecao/adicionar">Adicionar item</button>
+          <button class="opcoes__botao" type="button"
+                  data-abrir-modal="modalAdc"
+                  data-modal-titulo="Editar coleção"
+                  data-modal-action="/colecao/atualizar">Editar coleção</button>
+        </div>
+      </div>
+
+      <!-- LISTAGEM -->
+      <div class="lista">
+        {% if itens %}
+          {% for item in itens %}
+          <article class="item">
+            {% if item['item_imagem'] %}
+              <img class="item__miniatura" src="{{ item['item_imagem'] }}" alt="">
+            {% else %}
+              <span class="item__miniatura" aria-hidden="true"></span>
+            {% endif %}
+
+            <div>
+              <p class="item__nome">{{ item['item_nome'] }}</p>
+              <p class="item__detalhes">{{ item['item_autoria'] }}; {{ item['item_edicao'] }}; {{ item['item_ano'] }};</p>
+            </div>
+
+            <div class="item__meta">
+              <p>Último acesso: {{ item['item_ultimo_acesso'] }}</p>
+              <p>Localização: {{ item['item_localizacao'] }}</p>
+            </div>
+
+            <!-- Menu de ações: abre ao clicar nos três pontos -->
+            <div class="item__acoes">
+              <button class="item__gatilho" type="button"
+                      aria-label="Opções de {{ item['item_nome'] }}"
+                      aria-haspopup="menu" aria-expanded="false">
+                <span class="item__pontos"></span>
+              </button>
+              <ul class="menu-item" role="menu" hidden>
+                <li role="none">
+                  <button class="menu-item__acao" type="button" role="menuitem"
+                          data-acao="editar" data-id="{{ item['item_id'] }}">Editar item</button>
+                </li>
+                <li role="none">
+                  <button class="menu-item__acao menu-item__acao--perigo" type="button" role="menuitem"
+                          data-acao="deletar" data-id="{{ item['item_id'] }}">Deletar</button>
+                </li>
+              </ul>
+            </div>
+          </article>
+          {% endfor %}
+        {% else %}
+          <div class="lista__vazio">
+            <p>Nenhum item cadastrado!</p>
+          </div>
+        {% endif %}
+      </div>
+    </main>
+
+  </div>
+
+  <!-- MODAL: EDITAR COLEÇÃO -->
+  <dialog class="modal" id="modalAdc" aria-labelledby="modalAdcTitulo">
+    <form class="modal__corpo" method="post" action="/colecao/atualizar" enctype="multipart/form-data">
+      <h2 class="modal__titulo" id="modalAdcTitulo">Editar coleção</h2>
+
+      <img class="modal__imagem" alt="">
+
+      <div class="modal__campos">
+        <!-- FIELDITEM -->
+        <div class="campo">
+          <label for="campoTitulo">Título:</label>
+          <input id="campoTitulo" name="titulo" type="text" placeholder="título da obra">
+        </div>
+        <div class="campo">
+          <label for="campoAutor">Autor(a):</label>
+          <input id="campoAutor" name="autor" type="text" placeholder="autor(a) da obra">
+        </div>
+        <div class="campo">
+          <label for="campoEditora">Editora:</label>
+          <input id="campoEditora" name="editora" type="text" placeholder="editora da obra">
+        </div>
+        <div class="campo">
+          <label for="campoGenero">Gênero Literário:</label>
+          <input id="campoGenero" name="genero" type="text" placeholder="gênero literário da obra">
+        </div>
+        <div class="campo">
+          <label for="campoIsbn">ISBN:</label>
+          <input id="campoIsbn" name="isbn" type="number" placeholder="código ISBN da obra">
+        </div>
+        <div class="campo">
+          <label for="campoImagem">Imagem:</label>
+          <textarea id="campoImagem" name="imagem" rows="3" placeholder="arquivo de imagem"></textarea>
+        </div>
+
+        <div class="modal__rodape">
+          <button class="botao botao--contorno" type="button" data-fechar-modal>CANCELAR</button>
+          <button class="botao botao--primario" type="submit">SALVAR</button>
+        </div>
+      </div>
+
+      <button class="modal__fechar" type="button" data-fechar-modal aria-label="Fechar">X</button>
+    </form>
+  </dialog>
+
+  <script type="module" src="{{ url_for('static', filename='index.js') }}"></script>
+  <script src="{{ url_for('static', filename='menu-item.js') }}"></script>
+  <script src="{{ url_for('static', filename='modal.js') }}"></script>
+</body>
+</html>
