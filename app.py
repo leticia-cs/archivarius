@@ -32,7 +32,7 @@ def home():
 @app.route('/api/itens', methods=['POST'])
 def criar():
     d = request.get_json()
-    novo_id = crud.criar(d["nome"], d["autoria"], d["tipo"])
+    novo_id = crud.criar(d["titulo"], d["autoria"], d["editora"], d["genero"], d["isbn"])
     return jsonify({"id": novo_id}), 201
 
 # read

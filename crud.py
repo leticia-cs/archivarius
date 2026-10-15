@@ -1,10 +1,11 @@
 from db import *
 
-def criar(nome, autoria, tipo):
+def criar(titulo, autoria, editora, genero, isbn):
     db = get_db()
     cursor = db.execute(
-        "INSERT INTO itens (item_nome, item_autoria, item_tipo) VALUES (?, ?, ?)", # interrogacao para evitar inject
-        (nome, autoria, tipo)
+        "INSERT INTO itens (item_nome, item_autoria, item_editora, item_genero, item_isbn) "
+        "VALUES (?, ?, ?, ?, ?)",
+        (titulo, autoria, editora, genero, isbn)
     )
     db.commit()
     return cursor.lastrowid  # id do item criado; gerado pelo AUTOINCREMENT

@@ -1,8 +1,4 @@
-import * as CRUD from 'crud.py'
-
-function goTo(path) {
-    {{ url_for(path) }}
-}
+import {CRUD} from './crud.js';
 
 function toggleModal(modal_id) {
   // se modal existe, remove
@@ -46,7 +42,7 @@ function create_modal(variant, modal_id) {
         const modalSubmit = document.createElement('button');
         // TODO: CREATE
         //modalSubmit.addEventListener('click', () => alert('debug: CRIADO!'));
-        modalSubmit.addEventListener('click', () => CRUD.criar);
+        modalSubmit.addEventListener('click', () => await CRUD.criar('iTitulo.value'));
         modalSubmit.textContent = "enviar";
 
         contentButtons.appendChild(modalCancel);
