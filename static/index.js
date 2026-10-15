@@ -28,11 +28,11 @@ function create_modal(variant, modal_id) {
         contentParent.className = 'modal-content';
 
         contentParent.append(
-            create_fielditem('iTitulo', 'Titulo:', 'iTitulo', 'titulo obra'),
-            create_fielditem('iAutoria', 'Autoria:', 'iAutoria', 'autoria obra'),
-            create_fielditem('iEditora', 'Editora:', 'iEditora', 'editora obra'),
-            create_fielditem('iGenero', 'Genero Literario:', 'iGenero', 'genero literario obra'),
-            create_fielditem('iIsbn', 'ISBN:', 'iIsbn', 'isbn obra')
+            create_fielditem('iTitulo', 'Titulo:', 'titulo', 'titulo obra'),
+            create_fielditem('iAutoria', 'Autoria:', 'autoria', 'autoria obra'),
+            create_fielditem('iEditora', 'Editora:', 'editora', 'editora obra'),
+            create_fielditem('iGenero', 'Genero Literario:', 'genero', 'genero literario obra'),
+            create_fielditem('iIsbn', 'ISBN:', 'isbn', 'isbn obra')
         );
         // BOTOES MODAL
         const contentButtons = document.createElement('div');
@@ -42,8 +42,29 @@ function create_modal(variant, modal_id) {
         const modalSubmit = document.createElement('button');
         // TODO: CREATE
         //modalSubmit.addEventListener('click', () => alert('debug: CRIADO!'));
-        modalSubmit.addEventListener('click', () => await CRUD.criar('iTitulo.value'));
         modalSubmit.textContent = "enviar";
+        modalSubmit.addEventListener('click', async () => {
+            // lê todos os inputs do modal: { titulo: '...', autoria: '...', ... }
+            const dados = Object.fromEntries(
+                [...contentParent.querySelectorAll('input')].map(i => [i.name, i.value.trim()])
+            );
+
+            if (!dados.titulo) {
+                alert('Informe o título');
+                return;
+            }
+
+            modalSubmit.disabled = true;           // evita clique duplo
+            try {
+                await CRUD.criar(dados);
+                toggleModal(modal_id);             // fecha o modal
+                await carregarItens();             // atualiza a lista
+            } catch (e) {
+                console.error(e);
+                alert('Erro ao salvar');
+                modalSubmit.disabled = false;
+            }
+        });
 
         contentButtons.appendChild(modalCancel);
         contentButtons.appendChild(modalSubmit);

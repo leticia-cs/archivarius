@@ -28,26 +28,26 @@ def home():
 
 # === ROTAS API ===========
 
-# create
+# CRUD - create
 @app.route('/api/itens', methods=['POST'])
 def criar():
     d = request.get_json()
     novo_id = crud.criar(d["titulo"], d["autoria"], d["editora"], d["genero"], d["isbn"])
     return jsonify({"id": novo_id}), 201
 
-# read
+# CRUD - read
 @app.route('/api/itens', methods=['GET'])
 def listar_tudo():
     return jsonify([dict(r) for r in crud.listar_tudo()])
 
-# update
+# CRUD - update
 @app.route('/api/itens/<int:item_id>', methods=['PUT'])
 def atualizar(item_id):
     d = request.get_json()
     crud.atualizar(item_id, d["nome"], d["autoria"], d["tipo"])
     return "", 204
 
-# delete
+# CRUD - delete
 @app.route('/api/itens/<int:item_id>', methods=['DELETE'])
 def deletar_item(item_id):
     crud.deletar_item(item_id)
