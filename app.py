@@ -75,6 +75,7 @@ def buscar(item_id):
     return jsonify(dict(item))
 
 if __name__ == '__main__':
-    #app.run(debug=True)
-    webview.create_window('Flask example', app, fullscreen=True)
-    webview.start()
+    window = webview.create_window('Archivarius', app)
+    def tela_cheia():
+        window.maximize()
+    webview.start(tela_cheia)
