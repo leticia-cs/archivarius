@@ -1,0 +1,99 @@
+/* ==========================================================
+   Tela Inicial: só o painel da direita
+   Carregar DEPOIS do style.css (usa as variáveis dele).
+   Pode ser colado no fim do style.css se preferir um arquivo só.
+   ========================================================== */
+
+/* ---------- Cabeçalho (título + subtítulo) ---------- */
+
+.cabecalho {
+  padding: 20px 16px;
+  background: var(--fundo-externo);
+  text-align: center;
+}
+
+.cabecalho__titulo {
+  margin: 0;
+  font-size: 32px;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.cabecalho__subtitulo {
+  margin-top: 8px;
+  font-size: 14px;
+}
+
+/* ---------- Conteúdo (rola dentro do painel) ---------- */
+
+.conteudo {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 26px 8px 8px;
+}
+
+.saudacao {
+  font-size: 14px;
+}
+
+.secao {
+  margin-top: 28px;
+}
+
+.secao__titulo {
+  margin: 0 0 14px;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+/* ---------- Cards ---------- */
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 180px));
+  gap: 14px;
+}
+
+.cards > li {
+  display: flex;
+}
+
+.card {
+  flex: 1;
+  display: block;
+  padding: 12px 14px 14px;
+  border-radius: 6px;
+  background: #fff;
+  color: inherit;
+  text-decoration: none;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.25);
+}
+
+a.card:hover {
+  box-shadow: 0 3px 7px rgba(0, 0, 0, 0.35);
+}
+
+.card__titulo {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.card__texto {
+  margin-top: 10px;
+  font-size: 13px;
+}
+
+/* ---------- Telas menores ---------- */
+
+@media (max-width: 860px) {
+  .conteudo {
+    overflow-y: visible;
+  }
+
+  .cards {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  }
+}

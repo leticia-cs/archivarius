@@ -23,3 +23,19 @@ def close_db(e=None):
     db = g.pop("db", None)
     if db is not None:
         db.close()
+
+# PARA COMPACTACAO
+
+import os, sys
+from pathlib import Path
+
+def pasta_dados():
+    if sys.platform == "win32":
+        base = Path(os.environ["APPDATA"])
+    else:
+        base = Path.home() / ".local" / "share"
+    p = base / "MinhaColecao"
+    p.mkdir(parents=True, exist_ok=True)
+    return p
+
+DB_PATH = pasta_dados() / "colecao.db"

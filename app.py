@@ -3,9 +3,11 @@ import sqlite3
 from flask import Flask, jsonify, render_template, request, redirect, url_for
 from db import init_db, get_db, close_db
 import crud
+import webview
 
 app = Flask(__name__)
 app.teardown_appcontext(close_db)
+server = Flask(__name__, static_folder='./assets', template_folder='./templates')
 
 init_db()
 
@@ -20,8 +22,10 @@ def pagina_colecao():
     else:
         itens = db.execute("SELECT * FROM itens").fetchall()
     return render_template("colecao2.html", itens=itens, termo=termo)
+
 @app.route('/')
-def
+def index():
+    return redirect('/home')
 
 @app.route('/home')
 def home():
@@ -71,4 +75,6 @@ def buscar(item_id):
     return jsonify(dict(item))
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    #app.run(debug=True)
+    webview.create_window('Flask example', app, fullscreen=True)
+    webview.start()
