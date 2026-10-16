@@ -5,7 +5,7 @@ DB_NAME = "database.db"
 
 def init_db():
     conn = sqlite3.connect(DB_NAME)
-    with open("schema.sql", "r", encoding="utf-8") as f:
+    with open(caminho_arquivo("schema.sql"), encoding="utf-8") as f:
         conn.executescript(f.read())
     conn.commit()
     conn.close()
@@ -39,3 +39,8 @@ def pasta_dados():
     return p
 
 DB_PATH = pasta_dados() / "colecao.db"
+
+def caminho_arquivo(nome):
+    # quando empacotado, o PyInstaller extrai os arquivos em sys._MEIPASS
+    base = Path(getattr(sys, "_MEIPASS", Path(__file__).parent))
+    return base / nome
